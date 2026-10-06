@@ -1,0 +1,524 @@
+[index.html.html](https://github.com/user-attachments/files/33116908/index.html.html)
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Choice Guide | Curated Fashion Outfits & Capsule Wardrobe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            300: '#F3E5AB',
+                            400: '#E6C665',
+                            500: '#D4AF37',
+                            600: '#AA820A',
+                        },
+                        dark: {
+                            950: '#080808',
+                            900: '#0D0D0D',
+                            800: '#161616',
+                            700: '#222222',
+                            600: '#2A2A2A',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Montserrat', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #0D0D0D;
+            color: #E5E5E5;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* Custom scrollbar for horizontal tab slider */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF099 0%, #D4AF37 50%, #997A15 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gold-button {
+            background: linear-gradient(135deg, #D4AF37 0%, #AA820A 100%);
+            color: #0D0D0D;
+            transition: all 0.3s ease;
+        }
+        
+        .gold-button:hover {
+            background: linear-gradient(135deg, #E6C665 0%, #D4AF37 100%);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .glass-card {
+            background: rgba(22, 22, 22, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .active-tab {
+            background: #D4AF37 !important;
+            color: #0D0D0D !important;
+            font-weight: 700 !important;
+            border-color: #D4AF37 !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-gold-500 selection:text-dark-900">
+
+    <header class="sticky top-0 z-50 glass-card border-b border-gold-500/20 bg-dark-900/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <!-- Brand Logo / Monogram -->
+            <a href="#" onclick="filterLook('all')" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-full border border-gold-500/50 flex items-center justify-center bg-dark-800 group-hover:border-gold-500 transition-colors shadow-lg shadow-gold-500/10">
+                    <span class="font-serif font-bold text-gold-500 tracking-wider text-xl">SCG</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-serif text-lg sm:text-xl font-bold tracking-widest text-white uppercase leading-tight">Smart Choice Guide</span>
+                    <span class="text-[9px] sm:text-[10px] text-gold-400 tracking-widest uppercase">Curated Style Catalog</span>
+                </div>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="relative hidden md:block w-72 lg:w-96">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                <input 
+                    type="text" 
+                    id="search-input"
+                    placeholder="Search blazers, boots, sneakers, bags..." 
+                    onkeyup="handleSearch()"
+                    class="w-full bg-dark-800 border border-gold-500/20 rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold-500 transition-all"
+                >
+            </div>
+
+            <!-- Header Quick Actions -->
+            <div class="flex items-center gap-3">
+                <button onclick="copyFullCatalog()" class="text-xs px-3.5 py-2 rounded-lg border border-gold-500/30 text-gold-400 hover:border-gold-500 hover:bg-gold-500/10 transition-all flex items-center gap-2">
+                    <i class="fa-regular fa-copy"></i>
+                    <span class="hidden sm:inline font-medium">Copy Catalog</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search Input -->
+        <div class="px-4 pb-3 md:hidden">
+            <div class="relative w-full">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 text-xs"></i>
+                <input 
+                    type="text" 
+                    id="search-input-mobile"
+                    placeholder="Search any apparel piece..." 
+                    onkeyup="handleSearchMobile()"
+                    class="w-full bg-dark-800 border border-gold-500/20 rounded-full pl-9 pr-4 py-2 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-gold-500"
+                >
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <div class="text-center max-w-3xl mx-auto mb-8">
+            <span class="text-[11px] uppercase tracking-[0.3em] text-gold-500 font-semibold border border-gold-500/30 px-3 py-1 rounded-full bg-gold-500/10">Official Style Guide</span>
+            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl text-white font-bold tracking-tight mt-3 mb-3">
+                10 Iconic Capsule Outfits
+            </h1>
+            <p class="text-gray-400 text-xs sm:text-sm font-light leading-relaxed">
+                Explore 10 curated street style & tailored looks. Click any individual piece to view direct Amazon links or copy look specs for social media.
+            </p>
+        </div>
+
+        <div class="relative mb-10">
+            <div class="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 pt-1 px-1 border-b border-gold-500/20">
+                <button onclick="filterLook('all')" id="tab-all" class="tab-btn active-tab whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">
+                    ✨ All Looks (10)
+                </button>
+                <button onclick="filterLook(1)" id="tab-1" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 1: Power Suit</button>
+                <button onclick="filterLook(2)" id="tab-2" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 2: Athleisure</button>
+                <button onclick="filterLook(3)" id="tab-3" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 3: French Tuck</button>
+                <button onclick="filterLook(4)" id="tab-4" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 4: Feminine</button>
+                <button onclick="filterLook(5)" id="tab-5" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 5: Weekend</button>
+                <button onclick="filterLook(6)" id="tab-6" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 6: Layering</button>
+                <button onclick="filterLook(7)" id="tab-7" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 7: Night Out</button>
+                <button onclick="filterLook(8)" id="tab-8" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 8: Transition</button>
+                <button onclick="filterLook(9)" id="tab-9" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 9: Neutral</button>
+                <button onclick="filterLook(10)" id="tab-10" class="tab-btn whitespace-nowrap text-xs px-4 py-2 rounded-full border border-gold-500/30 text-gray-300 hover:text-white transition-all">Look 10: Monochrome</button>
+            </div>
+        </div>
+
+        <div id="looks-container" class="space-y-12">
+            <!-- Dynamic JavaScript Content Will Render All 10 Looks Here -->
+        </div>
+
+        <!-- No Results Fallback -->
+        <div id="no-results" class="hidden text-center py-16 glass-card rounded-2xl my-8">
+            <i class="fa-solid fa-magnifying-glass text-4xl text-gold-500/50 mb-3"></i>
+            <h3 class="font-serif text-2xl text-white font-semibold">No Items Found</h3>
+            <p class="text-xs text-gray-400 mt-1">Try adjusting your search query or clear the filter.</p>
+            <button onclick="filterLook('all')" class="mt-4 gold-button px-5 py-2 rounded-lg text-xs font-bold uppercase">Reset Search</button>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="fixed bottom-6 right-6 bg-gold-500 text-dark-950 px-5 py-3 rounded-xl font-bold shadow-2xl transition-all transform translate-y-24 opacity-0 flex items-center gap-3 z-50 border border-gold-300">
+            <i class="fa-solid fa-circle-check text-lg"></i>
+            <span id="toast-message" class="text-xs sm:text-sm">Copied to clipboard!</span>
+        </div>
+
+    </main>
+
+    <footer class="border-t border-gold-500/20 bg-dark-950 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-4">
+                <div class="w-9 h-9 rounded-full border border-gold-500/50 flex items-center justify-center bg-dark-800">
+                    <span class="font-serif font-bold text-gold-500 text-sm">SCG</span>
+                </div>
+                <span class="font-serif text-xl font-bold tracking-widest text-white uppercase">Smart Choice Guide</span>
+            </div>
+            <p class="text-xs text-gray-400 max-w-lg mx-auto leading-relaxed">
+                Smart Choice Guide compiles high-converting, luxury fashion capsule outfits. As an Amazon Associate, SCG earns from qualifying purchases.
+            </p>
+            <p class="text-[10px] text-gray-600 mt-6 tracking-widest uppercase">
+                &copy; <script>document.write(new Date().getFullYear())</script> Smart Choice Guide (SCG). All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Structured Data Array for all 10 Looks provided
+        const looksData = [
+            {
+                id: 1,
+                title: "LOOK 1 — The Power Suit",
+                tagline: "Off-Duty Model Errand Run",
+                formula: "Oversized Blazer + White Tee + Trousers + Retro Sneakers",
+                items: [
+                    { name: "Blazer", link: "https://amzn.to/4iYP8Sj", desc: "Structured relaxed-fit tailored blazer." },
+                    { name: "White Ribbed Tee", link: "https://amzn.to/4jAgsGB", desc: "Essential fitted stretch rib base layer." },
+                    { name: "Baseball Cap", link: "https://amzn.to/4rIrKun", desc: "Casual street-style embroidered cap." },
+                    { name: "Trousers", link: "https://amzn.to/4dL8uGU", desc: "High-waisted straight leg tailored trousers." },
+                    { name: "Retro Sneakers", link: "https://amzn.to/4hoimbZ", desc: "Chic vintage runner footwear." },
+                    { name: "Crossbody Bag", link: "https://amzn.to/4y78oRy", desc: "Minimalist black leather camera bag." }
+                ]
+            },
+            {
+                id: 2,
+                title: "LOOK 2 — Athleisure Chic",
+                tagline: "Sporty Meets High Tailoring",
+                formula: "Charcoal Blazer + Cycling Shorts + Sneakers + Tote Bag",
+                items: [
+                    { name: "Charcoal Blazer", link: "https://amzn.to/3VKsfrY", desc: "Deep charcoal modern boyfriend blazer." },
+                    { name: "Cycling Shorts / Leggings", link: "https://amzn.to/4y0Jhzr", desc: "High-waist sculpted activewear shorts." },
+                    { name: "Sneakers", link: "https://amzn.to/4hmKTPb", desc: "Neutral daily walking trainers." },
+                    { name: "Beige Cap", link: "https://amzn.to/4danuy0", desc: "Minimalist cotton dad cap in nude." },
+                    { name: "Beige Tote Bag", link: "https://amzn.to/3Tzgh3G", desc: "Spacious luxury daily shopper tote." }
+                ]
+            },
+            {
+                id: 3,
+                title: "LOOK 3 — Business Casual French Tuck",
+                tagline: "Elevated Parisian Corporate",
+                formula: "Double Breasted Blazer + Black Turtleneck + Wide Leg Trousers",
+                items: [
+                    { name: "Charcoal Double Breasted Blazer", link: "https://amzn.to/4hVlb4q", desc: "Gold button detailed statement blazer." },
+                    { name: "Black Turtleneck Sweater", link: "https://amzn.to/3VH5JjK", desc: "Ultra-fine ribbed turtleneck top." },
+                    { name: "Black Pleated Wide Leg Trousers", link: "https://amzn.to/4iTwg78", desc: "Flowy wide-leg pleated formal pants." },
+                    { name: "Black Leather Pointed Toe Shoes", link: "https://amzn.to/4iZT4SO", desc: "Sleek pointed pumps/flats." },
+                    { name: "Black Leather Tote Bag", link: "https://amzn.to/3VLJ7yB", desc: "Structured work & travel carryall." },
+                    { name: "Gold Hoops", link: "https://amzn.to/4y0fB5E", desc: "Chunky 18k gold-plated hoops." },
+                    { name: "Sleek Watch", link: "https://amzn.to/4AQaurx", desc: "Minimalist metallic luxury timepiece." }
+                ]
+            },
+            {
+                id: 4,
+                title: "LOOK 4 — Feminine Daywear",
+                tagline: "Soft Tailoring & Satin Drapes",
+                formula: "Blazer + Button-Down Shirt + Satin Slip Skirt + Loafers",
+                items: [
+                    { name: "Charcoal Double Breasted Blazer", link: "https://amzn.to/4hVlb4q", desc: "Tailored charcoal outer layer." },
+                    { name: "White Crisp Button-Down Shirt", link: "https://amzn.to/3U2MAbB", desc: "Classic poplin oversized white shirt." },
+                    { name: "Silver Champagne Satin Slip Skirt", link: "https://amzn.to/4hCdVJt", desc: "Elegant bias-cut silk feel skirt." },
+                    { name: "Black Leather Loafers", link: "https://amzn.to/4daqyKw", desc: "Chunky lug-sole classic loafers." },
+                    { name: "Black Leather Tote Bag", link: "https://amzn.to/3VLJ7yB", desc: "Sleek essential leather tote." },
+                    { name: "Gold Chain Necklace", link: "https://amzn.to/4AQceRB", desc: "Layered herringbone gold chain." }
+                ]
+            },
+            {
+                id: 5,
+                title: "LOOK 5 — Casual Weekend",
+                tagline: "Coastal Linen Elegance",
+                formula: "Navy Linen Blazer + White Shirt + High Waisted Shorts + Woven Tote",
+                items: [
+                    { name: "Navy Linen Single-Breasted Blazer", link: "https://amzn.to/4xSLuwP", desc: "Lightweight breathable navy blazer." },
+                    { name: "White Linen Shirt", link: "https://amzn.to/3VetqQr", desc: "Relaxed summer fit linen shirt." },
+                    { name: "Linen High Waisted Shorts", link: "https://amzn.to/47smim7", desc: "Tailored paperbag linen shorts." },
+                    { name: "Woven Straw Tote", link: "https://amzn.to/3VKr4J3", desc: "Resort-style woven straw shopper." },
+                    { name: "Gold Minimalist Jewelry", link: "https://amzn.to/4jyYR1F", desc: "Delicate stacked gold ring set." }
+                ]
+            },
+            {
+                id: 6,
+                title: "LOOK 6 — Chic Layering",
+                tagline: "Monochrome Night Transition",
+                formula: "Wool Tailored Blazer + Mini Dress + Clasp Belt + Knee-High Boots",
+                items: [
+                    { name: "Black Wool Tailored Blazer", link: "https://amzn.to/4xSMW2f", desc: "Premium heavyweight wool-blend blazer." },
+                    { name: "Black Mini Dress", link: "https://amzn.to/3VnD4Ae", desc: "Bodycon LBD layering dress." },
+                    { name: "Black Clasp Belt", link: "https://amzn.to/4ytiz3R", desc: "Waist-cinching gold clasp belt." },
+                    { name: "Black Knee-High Boots", link: "https://amzn.to/3VGrJLB", desc: "Sleek leather tall boot heels." },
+                    { name: "Black Leather Tote Bag", link: "https://amzn.to/3VLJ7yB", desc: "Classic black leather handbag." }
+                ]
+            },
+            {
+                id: 7,
+                title: "LOOK 7 — Night Out",
+                tagline: "Edgy Rocker Luxe",
+                formula: "Wool Blazer + Band Tee + Leather Joggers + Combat Boots",
+                items: [
+                    { name: "Black Wool Tailored Blazer", link: "https://amzn.to/4xSMW2f", desc: "Sharp black structured coat." },
+                    { name: "Rolling Graphic Band Tee", link: "https://amzn.to/4ytrwtS", desc: "Vintage washed band graphic tee." },
+                    { name: "Leather Joggers", link: "https://amzn.to/4AKORbZ", desc: "Faux leather elevated drawstring pants." },
+                    { name: "Combat Boots", link: "https://amzn.to/4zdT6vg", desc: "Lace-up chunky platform boots." },
+                    { name: "Structured Handbag", link: "https://amzn.to/4zdT9XY", desc: "Mini top-handle night purse." }
+                ]
+            },
+            {
+                id: 8,
+                title: "LOOK 8 — Smart Casual Transition",
+                tagline: "Preppy Jet-Setter Style",
+                formula: "Blue Wool Blazer + Cashmere Sweater + NY Cap + Weekender Bag",
+                items: [
+                    { name: "Blue Wool-Blend Blazer", link: "https://amzn.to/3W0HJYW", desc: "Rich navy blue wool outerwear." },
+                    { name: "NY Yankees Cap", link: "https://amzn.to/4rFi5oF", desc: "Authentic navy baseball cap." },
+                    { name: "Black Cashmere Sweater", link: "https://amzn.to/4hptTb9", desc: "Ultra-soft luxury cashmere knit." },
+                    { name: "Sneakers", link: "https://amzn.to/4hmKTPb", desc: "Clean low-top court sneakers." },
+                    { name: "Structured Weekender", link: "https://amzn.to/4zf3T8p", desc: "Overnight duffle weekend travel bag." }
+                ]
+            },
+            {
+                id: 9,
+                title: "LOOK 9 — Minimalist Neutral",
+                tagline: "Layered Urban Streetwear",
+                formula: "Oversized Grey Blazer + Denim Jacket + Hoodie + Dad Sneakers",
+                items: [
+                    { name: "Oversized Grey Blazer", link: "https://amzn.to/4hnwFNY", desc: "Boxy grey tailored jacket." },
+                    { name: "Light Wash Denim Jacket", link: "https://amzn.to/46XjxsP", desc: "Classic vintage wash denim coat." },
+                    { name: "Grey Oversized Jacket", link: "https://amzn.to/3U2JiFd", desc: "Heavy knit outerwear layer." },
+                    { name: "Grey Oversized Hoodie", link: "https://amzn.to/4zdVke6", desc: "Cozy fleece pullover hoodie." },
+                    { name: "Multi Panel Dad Sneakers", link: "https://amzn.to/3ThyuD3", desc: "Chunky multi-textured street trainers." }
+                ]
+            },
+            {
+                id: 10,
+                title: "LOOK 10 — Elevated Monochrome",
+                tagline: "All-Black Evening Sophistication",
+                formula: "Black Blazer + Metallic Trousers + Mesh Mock Top + Heeled Sandals",
+                items: [
+                    { name: "Black Structured Blazer", link: "https://amzn.to/4hr0MnS", desc: "Sharp silhouette black tuxedo blazer." },
+                    { name: "Black Metallic Trousers", link: "https://amzn.to/4hJEfSa", desc: "Subtle shimmer evening trousers." },
+                    { name: "Black Sheer Mesh Mock Neck Top", link: "https://amzn.to/4j01UQu", desc: "Chic sheer layering top." },
+                    { name: "Black-Heel Sandals", link: "https://amzn.to/4dg3ycY", desc: "Strappy stiletto heel sandals." },
+                    { name: "Structured Evening Clutch", link: "https://amzn.to/3VlhOuV", desc: "Hard-shell golden clasp clutch." }
+                ]
+            }
+        ];
+
+        function renderLooks(data) {
+            const container = document.getElementById('looks-container');
+            const noResults = document.getElementById('no-results');
+
+            if (!data || data.length === 0) {
+                container.innerHTML = '';
+                noResults.classList.remove('hidden');
+                return;
+            }
+
+            noResults.classList.add('hidden');
+
+            container.innerHTML = data.map(look => `
+                <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden transition-all duration-300">
+                    
+                    <!-- Card Top Header -->
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-gold-500/20 pb-6 mb-6">
+                        <div>
+                            <div class="flex items-center gap-3 mb-1">
+                                <span class="text-[10px] uppercase font-mono tracking-widest text-gold-400 bg-gold-500/10 px-2.5 py-1 rounded border border-gold-500/20">Capsule #0${look.id}</span>
+                                <span class="text-xs text-gray-400">${look.items.length} Curated Items</span>
+                            </div>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white">${look.title}</h2>
+                            <p class="text-xs text-gold-400/90 font-medium mt-1"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> ${look.tagline}</p>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="flex items-center gap-2">
+                            <button onclick="copySingleLook(${look.id})" class="text-xs px-3 py-2 rounded-lg bg-dark-800 border border-gold-500/30 text-gold-400 hover:border-gold-500 transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy"></i>
+                                <span>Copy Links</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Formula Banner -->
+                    <div class="bg-dark-900/80 border border-gold-500/15 rounded-xl p-3.5 mb-6 text-xs text-gray-300 flex items-center gap-3">
+                        <span class="text-gold-500 font-semibold uppercase tracking-wider text-[10px] bg-gold-500/10 px-2 py-0.5 rounded">Formula:</span>
+                        <span class="truncate">${look.formula}</span>
+                    </div>
+
+                    <!-- Items Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        ${look.items.map(item => `
+                            <div class="bg-dark-800/80 rounded-xl p-4 border border-dark-700 hover:border-gold-500/40 transition-all flex flex-col justify-between group">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <h3 class="font-semibold text-white text-sm group-hover:text-gold-400 transition-colors">${item.name}</h3>
+                                        <i class="fa-brands fa-amazon text-gray-500 text-sm"></i>
+                                    </div>
+                                    <p class="text-[11px] text-gray-400 mb-4 leading-relaxed">${item.desc}</p>
+                                </div>
+                                <a href="${item.link}" target="_blank" rel="noopener noreferrer" class="gold-button py-2.5 px-3 rounded-lg text-xs font-bold text-center flex items-center justify-center gap-2 w-full">
+                                    <span>Buy on Amazon</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </a>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                </div>
+            `).join('');
+        }
+
+        function filterLook(lookId) {
+            // Update active state on tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active-tab'));
+            
+            if (lookId === 'all') {
+                document.getElementById('tab-all').classList.add('active-tab');
+                renderLooks(looksData);
+            } else {
+                document.getElementById(`tab-${lookId}`).classList.add('active-tab');
+                const filtered = looksData.filter(item => item.id === lookId);
+                renderLooks(filtered);
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase().trim();
+            filterByQuery(query);
+        }
+
+        function handleSearchMobile() {
+            const query = document.getElementById('search-input-mobile').value.toLowerCase().trim();
+            filterByQuery(query);
+        }
+
+        function filterByQuery(query) {
+            if (!query) {
+                renderLooks(looksData);
+                return;
+            }
+
+            const filtered = looksData.map(look => {
+                const matchingItems = look.items.filter(item => 
+                    item.name.toLowerCase().includes(query) || 
+                    item.desc.toLowerCase().includes(query)
+                );
+
+                if (look.title.toLowerCase().includes(query) || matchingItems.length > 0) {
+                    return {
+                        ...look,
+                        items: matchingItems.length > 0 ? matchingItems : look.items
+                    };
+                }
+                return null;
+            }).filter(Boolean);
+
+            renderLooks(filtered);
+        }
+
+        function copyTextToClipboard(text, successMsg) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg || "Copied to clipboard!");
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function copySingleLook(id) {
+            const look = looksData.find(l => l.id === id);
+            if (!look) return;
+
+            let output = `🛍️ ${look.title} (Smart Choice Guide)\n\n`;
+            look.items.forEach(item => {
+                output += `• ${item.name}: ${item.link}\n`;
+            });
+
+            copyTextToClipboard(output, `Copied Look ${id} links!`);
+        }
+
+        function copyFullCatalog() {
+            let output = `🛍️ SMART CHOICE GUIDE — FULL 10 OUTFIT CATALOG\n\n`;
+            looksData.forEach(look => {
+                output += `${look.title}\n`;
+                look.items.forEach(item => {
+                    output += `• ${item.name}: ${item.link}\n`;
+                });
+                output += `\n`;
+            });
+
+            copyTextToClipboard(output, "Full 10-Look catalog copied!");
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.innerText = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initial Load
+        window.onload = function() {
+            renderLooks(looksData);
+        };
+    </script>
+</body>
+</html>
